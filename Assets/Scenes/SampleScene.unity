@@ -421,6 +421,7 @@ Transform:
   m_Children:
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 461787606}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &238772886
@@ -1149,8 +1150,8 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_BounceIntensity: 2
+  m_ColorTemperature: 3695
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -1233,6 +1234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 461787606}
+  - component: {fileID: 461787607}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1248,14 +1250,35 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461787605}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 357.61734, y: 322.30246, z: 515.43475}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -93.89136, y: 95.78252, z: -593.8278}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1758130616}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 152573601}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &461787607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461787605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e01126c9d525a54cbf728d92dcab4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 20
+  fastMoveMultiplier: 5
+  rotationSpeed: 100
+  directionalLight: {fileID: 410087040}
+  timeChangeSpeed: 50
+  nightIntensity: 0
+  dayIntensity: 1
+  dayColor: {r: 1, g: 0.95, b: 0.8, a: 1}
+  nightColor: {r: 0.5, g: 0.5, b: 0.6, a: 1}
 --- !u!1 &475453652
 GameObject:
   m_ObjectHideFlags: 0
@@ -3161,7 +3184,7 @@ Terrain:
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 356
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -3482,4 +3505,3 @@ SceneRoots:
   - {fileID: 152573601}
   - {fileID: 1997774394}
   - {fileID: 1840814859}
-  - {fileID: 461787606}
