@@ -1,22 +1,19 @@
+using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using Unity.Mathematics;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 
-
-public class RoadMeshGenerator : MonoBehaviour
-{ 
-    
-
-    private SplineContainer m_splineContainer;//
+[ExecuteInEditMode]
+public class RoadGeneratorEditor : MonoBehaviour
+{
+    private SplineContainer m_splineContainer;
 
     [SerializeField]
     private int m_splineIndex;
     [SerializeField]
     [Range(0f, 1f)]
     private float m_time;
-
 
     public MeshFilter m_meshFilter;
 
@@ -28,31 +25,39 @@ public class RoadMeshGenerator : MonoBehaviour
     List<Vector3> m_vertsP1 = new List<Vector3>();
     List<Vector3> m_vertsP2 = new List<Vector3>();
 
+    private float lastUpdateTime = 0f;
+    private const float updateInterval = 1f; // Update every second
+
     private void OnEnable()
     {
+        EditorApplication.update += EditorUpdate; // Subscribe to editor update
         Spline.Changed += OnSplineChanged;
-    }
-    private void OnDisable()
-    {
-        Spline.Changed -= OnSplineChanged;
-    }
-    private void Awake()
-    {
-        m_splineContainer = GetComponent<SplineContainer>();
-        m_meshFilter = gameObject.GetComponent<MeshFilter>();
-    }
-    private void Start()
-    {
         m_splineContainer = GetComponent<SplineContainer>();
         m_meshFilter = gameObject.GetComponent<MeshFilter>();
         Rebuild();
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void OnDisable()
+    {
+        EditorApplication.update -= EditorUpdate; // Unsubscribe to avoid leaks
+        Spline.Changed -= OnSplineChanged;
     }
 
     private void OnSplineChanged(Spline arg1, int arg2, SplineModification arg3)
     {
         Rebuild();
     }
+
+    private void EditorUpdate()
+    {
+        // Rebuild every `updateInterval` seconds
+        if (Time.realtimeSinceStartup - lastUpdateTime >= updateInterval)
+        {
+            Rebuild();
+            lastUpdateTime = Time.realtimeSinceStartup;
+        }
+    }
+
     private void Rebuild()
     {
         GetVerts();
@@ -128,6 +133,7 @@ public class RoadMeshGenerator : MonoBehaviour
         m.SetUVs(0, uvs);
         m_meshFilter.mesh = m;
     }
+
     private void SampleSplineWidth(float time, out Vector3 p1, out Vector3 p2)
     {
         float3 position;
@@ -140,4 +146,3 @@ public class RoadMeshGenerator : MonoBehaviour
         p2 = position + (-right * m_width);
     }
 }
-
